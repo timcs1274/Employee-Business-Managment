@@ -23,5 +23,81 @@ const promptUser = () => {
                   'None',]
         }
     ])
-    
-}
+    .then((answers) => {
+        const { choiceSlector } = answers;
+
+        if (choiceSlector === 'View all employees') {
+            viewEmployees();
+        }
+
+        if (choiceSlector === 'View all employees by Department') {
+            employeeDepartment();
+        }
+
+        if (choiceSlector === 'View all employees by manager') {
+            employeeManager();
+        }
+
+        if (choiceSlector === 'Add employee') {
+            addEmployee();
+        }
+
+        if (choiceSlector === 'Remove employee') {
+            removeEmployee();
+        }
+
+        if (choiceSlector === 'Update employee role') {
+            updateEmployee();
+        }
+
+        if (choiceSlector === 'Update employee manager') {
+            updateManager();
+        }
+
+        if (choiceSlector === 'View all roles') {
+            viewRoles();
+        }
+        
+        if (choiceSlector === 'Add role') {
+            addRoles();
+        }
+
+        if (choiceSlector === 'View all departments') {
+            viewDepartment();
+        }
+
+        if (choiceSlector === 'Add department') {
+            addDepartment();
+        }
+
+        if (choiceSlector === 'Remove department') {
+            removeDepartment();
+        }
+
+        
+    });
+};
+
+viewEmployees = () => {};
+
+employeeDepartment = () => {};
+
+employeeManager = () => {};
+
+addEmployee = () => {};
+
+removeEmployee = () => {};
+
+updateEmployee = () => {};
+
+updateManager = () => {};
+
+viewRoles = () => {};
+
+addRoles = () => {};
+
+viewDepartment = () => {};
+
+addDepartment = () => {};
+
+removeDepartment = () => {};
