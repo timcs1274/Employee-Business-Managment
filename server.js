@@ -1,6 +1,25 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const consoleTable = require('console.table');
+require('dotenv').config()
+
+
+const connection = msql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: process.env.SECRET_KEY,
+    database: 'db',
+});
+
+connection.connect(err => {
+    if(err) throw err;
+    console.log(err)
+    connectionComplete();
+});
+
+connectionComplete = () => {
+    console.log('~~~~~~~ Employee Business Manager ~~~~~~~')
+}
 
 const promptUser = () => {
     inquirer.prompt ([
@@ -62,6 +81,10 @@ const promptUser = () => {
             addRoles();
         }
 
+        if (choiceSlector === 'Remove role') {
+            removeRoles();
+        }
+
         if (choiceSlector === 'View all departments') {
             viewDepartment();
         }
@@ -95,6 +118,8 @@ updateManager = () => {};
 viewRoles = () => {};
 
 addRoles = () => {};
+
+removeRoles =() => {};
 
 viewDepartment = () => {};
 
