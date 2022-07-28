@@ -50,28 +50,12 @@ const promptUser = () => {
             viewEmployees();
         }
 
-        if (choiceSlector === 'View all employees by Department') {
-            employeeDepartment();
-        }
-
-        if (choiceSlector === 'View all employees by manager') {
-            employeeManager();
-        }
-
         if (choiceSlector === 'Add employee') {
             addEmployee();
         }
 
-        if (choiceSlector === 'Remove employee') {
-            removeEmployee();
-        }
-
         if (choiceSlector === 'Update employee role') {
             updateEmployee();
-        }
-
-        if (choiceSlector === 'Update employee manager') {
-            updateManager();
         }
 
         if (choiceSlector === 'View all roles') {
@@ -82,23 +66,9 @@ const promptUser = () => {
             addRoles();
         }
 
-        if (choiceSlector === 'Remove role') {
-            removeRoles();
-        }
-
-        if (choiceSlector === 'View all departments') {
-            viewDepartment();
-        }
-
         if (choiceSlector === 'Add department') {
             addDepartment();
-        }
-
-        if (choiceSlector === 'Remove department') {
-            removeDepartment();
-        }
-
-        
+        }        
     });
 };
 //function to view all employees
@@ -125,41 +95,31 @@ viewEmployees = () => {
 
 
 
-employeeDepartment = () => {
-    console.log('Here is the employee department: ');
-    const sql = `SELECT employee.first_name, 
-                        employee.last_name, 
-                        department.name AS department
-                FROM employee 
-                        LEFT JOIN role ON employee.role_id = role.id 
-                        LEFT JOIN department ON role.department_id = department.id`;
+// employeeDepartment = () => {
+//     console.log('Here is the employee department: ');
+//     const sql = `SELECT employee.first_name, 
+//                         employee.last_name, 
+//                         department.name AS department
+//                 FROM employee 
+//                         LEFT JOIN role ON employee.role_id = role.id 
+//                         LEFT JOIN department ON role.department_id = department.id`;
 
-    connection.promise().query(sql, (err, rows) => {
-        if (err) throw err; 
-        console.table(rows); 
-        promptUser();
-    });          
-};
+//     connection.promise().query(sql, (err, rows) => {
+//         if (err) throw err; 
+//         console.table(rows); 
+//         promptUser();
+//     });          
+// };
 
 
-employeeManager = () => {};
+
 
 addEmployee = () => {};
 
-removeEmployee = () => {};
-
 updateEmployee = () => {};
-
-updateManager = () => {};
 
 viewRoles = () => {};
 
 addRoles = () => {};
 
-removeRoles =() => {};
-
-viewDepartment = () => {};
-
 addDepartment = () => {};
-
-removeDepartment = () => {};
