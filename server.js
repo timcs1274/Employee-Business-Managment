@@ -1,24 +1,30 @@
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const inquirer = require('inquirer');
 const consoleTable = require('console.table');
-require('dotenv').config()
+require('dotenv').config();
+
+//DB_USER='root'
+//DB_PASSWORD='Tktlfbbf4!'
+//DB_NAME=employee_db
 
 
-const connection = msql.createConnection({
+
+
+
+const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: process.env.SECRET_KEY,
-    database: 'db',
+    database: 'employee_db',
 });
 
 connection.connect(err => {
     if(err) throw err;
-    console.log(err)
-    connectionComplete();
+    connectionComplete()
 });
 
 connectionComplete = () => {
-    console.log('~~~~~~~ Employee Business Manager ~~~~~~~')
+    console.log('~~~~~~~~~ Employee Business Manager ~~~~~~~~~')
     promptUser();
 }
 
@@ -29,18 +35,12 @@ const promptUser = () => {
         name: 'choiceSelector',
         message: 'What would you like to do?',
         choices: ['View all employees',
-                  'View all employees by Department',
-                  'View all employees by manager',
                   'Add employee',
-                  'Remove employee',
                   'Update employee role',
-                  'Update employee manager',
                   'View all roles',
                   'Add role',
                   'View all departments',
-                  'Add department',
-                  'Remove department',
-                  'None',]
+                  'Add department',]
         }
     ])
     .then((answers) => {
