@@ -174,8 +174,72 @@ addEmployee = () => {
     });
 };
 
-updateEmployee = () => {}; //------------------------------
 
+
+//function to update employee
+updateEmployee = () => {
+    const employeeSeeds = `SELECT * FROM employee`;
+
+    connection.promise().query(employeeSeeds, (err, data) => {
+        if (err) throw err;
+
+        const employees = data.map (({ id, first_name, last_name }) => ({name: first_name + ' ' + last_name, value: id }));
+
+        inquierer.prompt([
+            {
+                type: 'list',
+                name: 'manager',
+                message: "Which employee do you want to update?",
+                choices: employees  
+            }
+        ])
+        .then(employeeChoice => {
+            const employee = employeeChoice.name;
+            const params = [];
+            params.push(employee);
+
+            const roleSeeds = `SELECT * FROM role`;
+
+            connection.promise().query(employeeSeeds, (err, data) => {
+                if (err) throw err;
+
+                const roles = data.map(({ id, title }) => ({ name: title, value: id }));
+
+                inquirer.prompt([
+                    {
+                        type: 'list',
+                        name: 'role',
+                        message: "What would you like to update the employee role to?",
+                        choices: roles   
+                    }
+                ])
+                .then(roleChoice => {
+                    const role = roleChoice.role;
+                    paramas.push(role);
+
+                    let employee = params[0]
+                    params[0] = role
+                    params[1] = employee
+
+                    const sql = `UPDATE employee SET role_id = ? WHERE id = ?`;
+
+                    connection.promise().query(employeeSeeds, (err, data) => {
+                        if (err) throw err;
+                        console.log('Employee role has been updated.');
+
+                        viewEmployees();
+                    });
+                });
+            });
+        });
+    });
+};
+
+
+
+
+
+//function to view all roles
 viewRoles = () => {
     console.log('Here are the roles: ');
 
