@@ -260,20 +260,62 @@ viewRoles = () => {
 
 
 
-
+//function to add roles
 addRoles = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'role',
+            message: "Which role would you like to add?",
+            validate: addRole => {
+                if (addRole) {
+                    return true;
+                } else {
+                    console.log('Please enter the role you would like to add');
+                    return false;
+                }
+            } 
+        }
+    ])
+    .then(answer => {
+        const params = [answer.role];
+        const roleSeeds = `SELECT name, id FROM department`;
+    
+        connection.promise().query(roleSeeds, (err, rows) => {
+            if (err) throw err;
+    
+            const department = data.map(({ name, id }) => ({ name: name, value: id }));
+    
+            inquirer.prompt([
+                {
+                    type: 'list',
+                    name: 'dept',
+                    message: "What department is this role in?",
+                    choices: dept
+                }
+            ])
+            .then(departmentChoice => {
+                const department = departmentChoice.department;
+                params.push(dept);
 
+                const sql =`INSERT INTO role (title, department_id)
+                            VALUES (?, ?, ?)`;
+                
+                connection.query(sql, params, (err, result) => {
+                    if (err) throw err;
+                    console.log('Successfully added ' + answer.role);
+
+                    viewRoles();
+                });
+            });
+        });
+    });
 };
 
 
 
 
-
-
-
-
-
-
+//function to add department
 addDepartment = () => {
     inquirer.prompt([
         {
@@ -290,13 +332,13 @@ addDepartment = () => {
             }
         }
     ])
-    .then(answer => {
-        const sql = `INSERT INTO department (name)
-                    VALUES (?)`;
-    connection.query(sql, answer.addDepartment, (err, result) => {
-        if (err) throw err;
-        console.log('Sucessfully added ' + answer.addDepartment);
-        viewDepartments();
-    })
-    })
+        .then(answer => {
+            const sql = `INSERT INTO department (name)
+                        VALUES (?)`;
+        connection.query(sql, answer.addDepartment, (err, result) => {
+            if (err) throw err;
+            console.log('Sucessfully added ' + answer.addDepartment);
+            viewDepartments();
+        });
+    });
 };
