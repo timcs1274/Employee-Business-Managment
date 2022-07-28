@@ -143,6 +143,23 @@ addEmployee = () => {
             }
         }
     ])
+        .then(answer => {
+            const params = [answer.firstName, answer.lastName]
+            const roleSeeds = `SELECT role.id, role.title FROM role`;
+            
+            connection.promise().query(roleSeeds, (err, data) => {
+                if (err) throw err;
+                const roles = data.map(({ id, title }) => ({name: title, value:id}));
+                inquirer.prompt([
+                    {
+                        type: 'list',
+                        name: 'role',
+                        message: "What is the role of the employee?",
+                        choices: roles
+                    }
+                ])
+            })
+    })
 };
 
 updateEmployee = () => {};
