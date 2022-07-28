@@ -114,7 +114,36 @@ viewEmployees = () => {
 
 
 
-addEmployee = () => {};
+addEmployee = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'firstName',
+            message: 'What is first name of the employee?',
+            validate: addFirst => {
+                if (addFirst) {
+                    return true;
+                } else {
+                    console.log('Please enter the employee first name.');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'lastName',
+            message: 'What is last name of the employee?',
+            validate: addLast => {
+                if (addLast) {
+                    return true;
+                } else {
+                    console.log('Please enter the employee last name.');
+                    return false;
+                }
+            }
+        }
+    ])
+};
 
 updateEmployee = () => {};
 
