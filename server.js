@@ -19,6 +19,7 @@ connection.connect(err => {
 
 connectionComplete = () => {
     console.log('~~~~~~~ Employee Business Manager ~~~~~~~')
+    promptUser();
 }
 
 const promptUser = () => {
@@ -100,8 +101,35 @@ const promptUser = () => {
         
     });
 };
+//function to view all employees
+viewEmployees = () => {
+    console.log('Here are the employees: ');
+    const sql = `SELECT employee.id,
+                        employee.first_name,
+                        employee.last_name,
+                        role.title,
+                        department.name AS department,
+                        role.salary,
+                        CONCAT (manager.first_name, '', manager.last_name) AS manager
+                FROM employee
+                        LEFT JOIN role ON employee.role_id = role.id
+                        LEFT JOIN department ON role.department_id = department.id
+                        LEFT JOIN employee manager On employee.manager_id = manager.id`;
 
-viewEmployees = () => {};
+    connection.promise().query(sql, (err, rows) => {
+        if (err) throw err;
+        console.table(rows);
+        promptUser();
+    });
+
+};
+
+
+
+
+
+
+
 
 employeeDepartment = () => {};
 
