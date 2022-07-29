@@ -3,13 +3,6 @@ const inquirer = require('inquirer');
 const consoleTable = require('console.table');
 require('dotenv').config();
 
-//DB_USER='root'
-//DB_PASSWORD='Tktlfbbf4!'
-//DB_NAME=employee_db
-
-
-
-
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -26,7 +19,7 @@ connection.connect(err => {
 connectionComplete = () => {
     console.log('~~~~~~~~~ Employee Business Manager ~~~~~~~~~')
     promptUser();
-}
+};
 
 const promptUser = () => {
     inquirer.prompt ([
@@ -83,8 +76,6 @@ viewEmployees = () => {
                         employee.first_name,
                         employee.last_name,
                         role.title,
-                        CONCAT (manager.first_name, '', manager.last_name) AS manager
-                FROM employee
                         LEFT JOIN role ON employee.role_id = role.id
                         LEFT JOIN department ON role.department_id = department.id
                         LEFT JOIN employee manager On employee.manager_id = manager.id`;
